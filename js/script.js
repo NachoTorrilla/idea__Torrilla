@@ -1,98 +1,87 @@
-let productoA = "Zapatillas Nike"
-let precioA = 23000
-let stockA = 10
+let zapatillaNike = new Producto("Nike Advance", 150, 1000);
+let zapatillaAdidas = new Producto("Adidas Balance", 200, 4000);
+let zapatillaLacoste = new Producto("Lacoste Urban", 250, 2000);
+let zapatillaVans = new Producto("Vans Lost", 89, 3000);
+let zapatillaNewBalance = new Producto("New Balance", 99, 6000);
 
-let productoB = "Zapatillas Lacoste"
-let precioB = 25000
-let stockB = 50
+let listaZapatillas = [zapatillaNike, zapatillaAdidas, zapatillaLacoste, zapatillaVans, zapatillaNewBalance];
 
-let productoC = "Zapatillas Adidas"
-let stockC = 40
-let precioC = 19000
+let listaNombres = [];
 
-let productoD = "Zapatillas Vans"
-let stockD = 70
-let precioD = 17000
+for (const productos of listaZapatillas){
+    if(productos.stock > 0){
+        listaNombres.push(productos.nombre)
+    } 
+}
 
-let mardelplata = 500
-let necochea = 1000
-let pinamar = 1000
-
-
-function menu ()
-{
-alert("Bienvenido a NET SHOES, acepte para ingresar en nuestra página")
-let entrada = prompt("Ingrese el numero para acceder al menu: \n1.Comprar \n2.Stock \n3.Calcular Envío \n4.Salir")
-let chart = "s"
-
-while(chart == "s"){
-    switch(entrada){
-        case "1":
-           let opc= prompt("\n1.Comprar Nike \n2.Comprar Lacoste \n3.Comprar Adidas \n4.Comprar Vans \n5.Salir")
-           switch(opc){
-            case "1":
-                alert("Gracias por comprar el precio es de " + precioA)
-                chart = "n"
-            break
-            case "2":
-                alert("Gracias por comprar el precio es de " + precioB)
-                chart = "n"
-            break
-            case "3":
-                alert("Gracias por comprar el precio es de " + precioC)
-                chart = "n"
-            break
-            case "4":
-                alert("Gracias por comprar el precio es de " + precioD)
-                chart = "n"
-            break
-            case "5":
-                alert("Gracias por venir")
-                chart = "n"
-            break
-           }
-        break
-        case "2":
-            let opc2= prompt("\n1.Nike \n2.Lacoste \n3.Adidas \n4.Vans \n5.Salir")
-            switch(opc2){
-                case "1":
-                    alert("El Stock es " + stockA + " Unidades")
-                    chart = "n"
-                    break
-                case "2":
-                    alert("El Stock es "+ stockB + " Unidades")
-                    chart = "n"
-                    break
-                case "3":
-                    alert("El Stock es "+ stockC + " Unidades")
-                    chart = "n"
-                    break
-                case "4":
-                    alert("El Stock es "+ stockD + " Unidades")
-                    chart = "n"
-                    break
-                case "5":
-                    chart = "n"
-                    break
-            }
-        break
-        case "3":
-            let opc3=prompt("Ingresa el numero segun corresponda tu ciudad:\n1.Mar del Plata \n2.Pinamar \n3.Necochea ")
-            switch(opc3){
-                case "1":
-                    alert("El envio cuesta " + mardelplata)
-                    chart = "n"
-                    break
-                case "2":
-                    alert("El envio cuesta " + necochea)
-                    chart = "n"
-                    break
-                case "3":
-                    alert("El envio cuesta " + pinamar)
-                    chart = "n"
-                    break    
-            }
+function Producto(nombre, precio, stock){
+    this.nombre = nombre;
+    this.precio = precio;
+    this.stock = stock;
+    this.restarStock = function(cantidad){ 
+        this.stock -= cantidad
     }
 }
+
+let precioTotal = 0;
+
+alert("Bienvendio a Net Shoes, estos son nuestros productos: \n - " + listaNombres.join(" \n - "))
+
+function calcularPrecio(cantidad, precio){
+    precioTotal += (cantidad * precio)
 }
-menu()
+
+function calcularStock(cantidad, stock, precio){
+    if(cantidad <= stock){
+        calcularPrecio(cantidad, precio)
+    }
+    else{
+        alert("Lo sentimos, de ese producto solo tenemos este stock: " + stock)
+    }
+}
+
+function totalCompra(){
+    if(precioTotal != 0){
+        alert("El precio total es: $" + precioTotal)
+    }
+}
+
+let zapatillas = ["nike advance","adidas balance","lacoste urban","vans lost","new balance" ]
+
+let cantidadCompra = prompt("Que cantidad de productos desea comprar?: ");
+
+function comprobarCompra(v_comprobarCompra){
+    for(let i = 0; i < v_comprobarCompra; i = i + 1){
+        let zapatillaCompra = prompt("Ingrese que Zapatilla desea comprar: \n " + zapatillas[0] + " \n " + zapatillas[1] + " \n " + zapatillas[2] + " \n " + zapatillas[3] + " \n " + zapatillas[4])
+
+    if(zapatillaCompra.toLowerCase() == zapatillas[0]){
+        let cantidadZapatillaNike = prompt("Ingrese cuantas " + zapatillaNike.nombre + " desea comprar: ")
+        calcularStock(cantidadZapatillaNike, zapatillaNike.stock, zapatillaNike.precio)
+        zapatillaNike.restarStock(cantidadZapatillaNike)
+    }
+    else if(zapatillaCompra.toLowerCase() == zapatillas[1]){
+        let cantidadZapatillaAdidas = prompt("Ingrese cuantas " + zapatillaAdidas.nombre + " desea comprar: ")
+        calcularStock(cantidadZapatillaAdidas, zapatillaAdidas.stock, zapatillaAdidas.precio)
+        zapatillaAdidas.restarStock(cantidadZapatillaAdidas)
+    }
+    else if(zapatillaCompra.toLowerCase() == zapatillas[2]){
+        let cantidadZapatillaLacoste = prompt("Ingrese cuantas " + zapatillaLacoste.nombre + " desea comprar: ")
+        calcularStock(cantidadZapatillaLacoste, zapatillaLacoste.stock, zapatillaLacoste.precio)
+        zapatillaLacoste.restarStock(cantidadZapatillaLacoste)
+    }
+    else if(zapatillaCompra.toLowerCase() == zapatillas[3]){
+        let cantidadZapatillaVans = prompt("Ingrese cuantas " + zapatillaVans.nombre + " desea comprar: ")
+        calcularStock(cantidadZapatillaVans, zapatillaVans.stock, zapatillaVans.precio)
+        zapatillaVans.restarStock(cantidadZapatillaVans)
+    }
+    else if(zapatillaCompra.toLowerCase() == zapatillas[4]){
+        let cantidadZapatillaNewBalance = prompt("Ingrese cuantas " + zapatillaNewBalance.nombre + " desea comprar: ")
+        calcularStock(cantidadZapatillaNewBalance, zapatillaNewBalance.stock, zapatillaNewBalance.precio)
+        zapatillaNewBalance.restarStock(cantidadZapatillaNewBalance)
+    }
+    }
+}
+
+comprobarCompra(cantidadCompra);
+totalCompra();
+calcularPrecio();
